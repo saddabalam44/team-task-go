@@ -1,0 +1,16 @@
+# Safety Net Ignore File
+# This ensures that even if you miss something, these files never go to GitHub.
+
+# Ignore all node_modules everywhere
+**/node_modules/
+node_modules/
+
+# Ignore all .env files everywhere
+**/.env
+**/.env.*
+.env
+
+# Ignore build files
+**/dist/
+**/build/
+**/out/
