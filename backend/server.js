@@ -7,8 +7,9 @@ import authRoutes from './routes/auth.js';
 import projectRoutes from './routes/projects.js';
 import taskRoutes from './routes/tasks.js';
 import userRoutes from './routes/users.js';
-import noticeRoutes from './routes/notices.js';
+import noticeRoutes from './routes/notices.js';import dns from 'node:dns/promises';
 
+dns.setServers(['8.8.8.8', '1.1.1.1']);
 dotenv.config();
 
 const app = express();
