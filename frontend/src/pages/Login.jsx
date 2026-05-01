@@ -6,8 +6,8 @@ import { motion } from 'motion/react';
 import { LogIn, ArrowRight } from 'lucide-react';
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('admin@gmail.com');
+  const [password, setPassword] = useState('Admin@123');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
@@ -86,12 +86,7 @@ export default function Login() {
             </button>
           </form>
 
-          <p className="mt-8 text-center text-gray-500 font-medium">
-            Don't have an account?{' '}
-            <Link to="/signup" className="text-[#3eb368] font-bold hover:underline">
-              Create one
-            </Link>
-          </p>
+
         </div>
       </motion.div>
     </div>
