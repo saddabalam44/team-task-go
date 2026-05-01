@@ -73,6 +73,7 @@ export default function Tasks() {
       fetchTasks();
     } catch (error) {
       console.error('Error creating task:', error);
+      alert(error.response?.data?.message || 'Failed to create task');
     }
   };
 

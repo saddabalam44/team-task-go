@@ -41,8 +41,10 @@ export default function Projects() {
       fetchProjects();
     } catch (error) {
       console.error('Error creating project:', error);
+      alert(error.response?.data?.message || 'Failed to create project');
     }
   };
+
 
   const handleDeleteProject = async (id) => {
     if (window.confirm('Delete this project?')) {
