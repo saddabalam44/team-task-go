@@ -1,4 +1,7 @@
 import mongoose from 'mongoose';
+import dns from 'node:dns/promises';
+dns.setServers(['8.8.8.8', '1.1.1.1']);
+
 import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
 import User from './models/User.js';

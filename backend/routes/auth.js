@@ -1,6 +1,8 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
+import { sendWelcomeEmail } from '../utils/email.js';
+
 
 const router = express.Router();
 
@@ -21,6 +23,8 @@ router.post('/signup', async (req, res) => {
     });
 
     if (user) {
+      sendWelcomeEmail(email, name, password).catch(e => console.error('Email failed:', e));
+
       res.status(201).json({
         _id: user._id,
         name: user.name,
