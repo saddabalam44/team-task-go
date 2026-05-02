@@ -206,11 +206,18 @@ export default function Tasks() {
                     'bg-gray-100 text-gray-600 hover:bg-gray-200'
                   }`}
                 >
-                  <option>Pending</option>
-                  <option>In Progress</option>
-                  <option>In Review</option>
-                  <option>Completed</option>
-                  <option>Needs Revision</option>
+                  <option value="Pending">Pending</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="In Review">In Review</option>
+                  {user?.role === 'Admin' && (
+                    <>
+                      <option value="Completed">Completed</option>
+                      <option value="Needs Revision">Needs Revision</option>
+                    </>
+                  )}
+                  {user?.role !== 'Admin' && (task.status === 'Completed' || task.status === 'Needs Revision') && (
+                    <option value={task.status}>{task.status}</option>
+                  )}
                 </select>
 
                 {user?.role === 'Admin' && (
