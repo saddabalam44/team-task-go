@@ -155,10 +155,10 @@ export default function Tasks() {
               <div className="flex items-start gap-5 flex-1">
                 <button 
                   onClick={() => updateTaskStatus(task._id, task.status === 'Completed' ? 'In Progress' : 'Completed')}
-                  disabled={user?.role !== 'Admin'}
+                  disabled={user?.role !== 'Admin' && task.assignedTo?._id !== user?._id}
                   className={`mt-1.5 w-8 h-8 rounded-xl border-2 flex items-center justify-center transition-all flex-shrink-0 ${
                     task.status === 'Completed' ? 'bg-[#3eb368] border-[#3eb368] text-white' : 'border-gray-200 hover:border-[#3eb368] text-transparent hover:text-[#3eb368]/30 bg-gray-50'
-                  } ${user?.role !== 'Admin' ? 'cursor-not-allowed opacity-60 hover:border-gray-200 hover:text-transparent' : ''}`}
+                  } ${user?.role !== 'Admin' && task.assignedTo?._id !== user?._id ? 'cursor-not-allowed opacity-60 hover:border-gray-200 hover:text-transparent' : ''}`}
                 >
                   <Check size={18} strokeWidth={3} />
                 </button>
@@ -189,9 +189,9 @@ export default function Tasks() {
                 <select 
                   value={task.status}
                   onChange={(e) => updateTaskStatus(task._id, e.target.value)}
-                  disabled={user?.role !== 'Admin'}
+                  disabled={user?.role !== 'Admin' && task.assignedTo?._id !== user?._id}
                   className={`text-xs font-bold uppercase tracking-widest px-5 py-2.5 rounded-xl transition-all appearance-none border-2 border-transparent focus:outline-none focus:ring-4 focus:ring-[#3eb368]/10 ${
-                    user?.role !== 'Admin' ? 'cursor-not-allowed opacity-80' : 'cursor-pointer'
+                    user?.role !== 'Admin' && task.assignedTo?._id !== user?._id ? 'cursor-not-allowed opacity-80' : 'cursor-pointer'
                   } ${
                     task.status === 'Completed' ? 'bg-[#e3f5ea] text-[#3eb368]' :
                     task.status === 'In Progress' ? 'bg-amber-100 text-amber-700' :

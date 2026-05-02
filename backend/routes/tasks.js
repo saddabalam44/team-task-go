@@ -9,11 +9,13 @@ const router = express.Router();
 router.get('/', protect, async (req, res) => {
   try {
     let tasks;
-    if (req.user.role === 'Admin') {
+    // Check if the user is an Admin (case-insensitive for robustness)
+    if (req.user.role && req.user.role.toLowerCase() === 'admin') {
       tasks = await Task.find().populate('project').populate('assignedTo', 'name email');
     } else {
+      // Members only see tasks specifically assigned to them
       tasks = await Task.find({ 
-        assignedTo: req.user._id
+        assignedTo: req.user._id 
       }).populate('project').populate('assignedTo', 'name email');
     }
     res.json(tasks);
@@ -38,16 +40,35 @@ router.post('/', protect, adminOnly, async (req, res) => {
   }
 });
 
-router.put('/:id', protect, adminOnly, async (req, res) => {
+router.put('/:id', protect, async (req, res) => {
   try {
     const task = await Task.findById(req.params.id);
     if (!task) return res.status(404).json({ message: 'Task not found' });
 
-    Object.assign(task, req.body);
+    // Admin can update everything. 
+    // Members can ONLY update the status of their OWN tasks.
+    const isAdmin = req.user.role && req.user.role.toLowerCase() === 'admin';
+    const isAssignedToUser = task.assignedTo.toString() === req.user._id.toString();
+
+    if (!isAdmin && !isAssignedToUser) {
+      return res.status(403).json({ message: 'Not authorized to update this task' });
+    }
+
+    if (!isAdmin) {
+      // Member can only update status
+      if (req.body.title || req.body.description || req.body.project || req.body.assignedTo || req.body.deadline) {
+        return res.status(403).json({ message: 'Members can only update task status' });
+      }
+      task.status = req.body.status || task.status;
+    } else {
+      // Admin can update any field
+      Object.assign(task, req.body);
+    }
+
     await task.save();
 
-    // If assignedTo or project changed, update the project members
-    if (req.body.assignedTo || req.body.project) {
+    // If assignedTo or project changed (only possible for Admin), update the project members
+    if (isAdmin && (req.body.assignedTo || req.body.project)) {
       const projectId = req.body.project || task.project;
       const userId = req.body.assignedTo || task.assignedTo;
       await Project.findByIdAndUpdate(projectId, {
