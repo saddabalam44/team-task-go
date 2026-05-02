@@ -126,7 +126,9 @@ export default function Tasks() {
               <option>All</option>
               <option>Pending</option>
               <option>In Progress</option>
+              <option>In Review</option>
               <option>Completed</option>
+              <option>Needs Revision</option>
             </select>
           </div>
 
@@ -157,10 +159,13 @@ export default function Tasks() {
                   onClick={() => updateTaskStatus(task._id, task.status === 'Completed' ? 'In Progress' : 'Completed')}
                   disabled={user?.role !== 'Admin' && task.assignedTo?._id !== user?._id}
                   className={`mt-1.5 w-8 h-8 rounded-xl border-2 flex items-center justify-center transition-all flex-shrink-0 ${
-                    task.status === 'Completed' ? 'bg-[#3eb368] border-[#3eb368] text-white' : 'border-gray-200 hover:border-[#3eb368] text-transparent hover:text-[#3eb368]/30 bg-gray-50'
+                    task.status === 'Completed' ? 'bg-[#3eb368] border-[#3eb368] text-white' : 
+                    task.status === 'In Review' ? 'bg-blue-500 border-blue-500 text-white' :
+                    task.status === 'Needs Revision' ? 'bg-red-100 border-red-300 text-red-500' :
+                    'border-gray-200 hover:border-[#3eb368] text-transparent hover:text-[#3eb368]/30 bg-gray-50'
                   } ${user?.role !== 'Admin' && task.assignedTo?._id !== user?._id ? 'cursor-not-allowed opacity-60 hover:border-gray-200 hover:text-transparent' : ''}`}
                 >
-                  <Check size={18} strokeWidth={3} />
+                  {task.status === 'In Review' ? <Clock size={16} strokeWidth={3} /> : <Check size={18} strokeWidth={3} />}
                 </button>
                 <div>
                   <h3 className={`font-bold text-xl tracking-tight transition-colors ${task.status === 'Completed' ? 'line-through text-gray-400' : 'text-gray-800'}`}>
@@ -194,13 +199,17 @@ export default function Tasks() {
                     user?.role !== 'Admin' && task.assignedTo?._id !== user?._id ? 'cursor-not-allowed opacity-80' : 'cursor-pointer'
                   } ${
                     task.status === 'Completed' ? 'bg-[#e3f5ea] text-[#3eb368]' :
+                    task.status === 'In Review' ? 'bg-blue-100 text-blue-700' :
+                    task.status === 'Needs Revision' ? 'bg-red-100 text-red-700' :
                     task.status === 'In Progress' ? 'bg-amber-100 text-amber-700' :
                     'bg-gray-100 text-gray-600 hover:bg-gray-200'
                   }`}
                 >
                   <option>Pending</option>
                   <option>In Progress</option>
+                  <option>In Review</option>
                   <option>Completed</option>
+                  <option>Needs Revision</option>
                 </select>
 
                 {user?.role === 'Admin' && (

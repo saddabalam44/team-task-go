@@ -147,7 +147,10 @@ export default function Dashboard() {
                 >
                   <div className="flex items-center gap-4">
                     <div className={`w-3 h-3 rounded-full shadow-inner ${
-                      task.status === 'In Progress' ? 'bg-amber-400' : 'bg-gray-300'
+                      task.status === 'In Progress' ? 'bg-amber-400' : 
+                      task.status === 'In Review' ? 'bg-blue-400' :
+                      task.status === 'Needs Revision' ? 'bg-red-400' :
+                      'bg-gray-300'
                     }`} />
                     <div>
                       <p className="font-bold text-gray-800 group-hover:text-[#3eb368] transition-colors text-lg">{task.title}</p>
@@ -156,7 +159,10 @@ export default function Dashboard() {
                   </div>
                   <div className="text-right">
                     <span className={`inline-block px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-wider ${
-                      task.status === 'In Progress' ? 'bg-amber-100 text-amber-700' : 'bg-gray-100 text-gray-600'
+                      task.status === 'In Progress' ? 'bg-amber-100 text-amber-700' : 
+                      task.status === 'In Review' ? 'bg-blue-100 text-blue-700' :
+                      task.status === 'Needs Revision' ? 'bg-red-100 text-red-700' :
+                      'bg-gray-100 text-gray-600'
                     }`}>
                       {task.status}
                     </span>

@@ -59,6 +59,12 @@ router.put('/:id', protect, async (req, res) => {
       if (req.body.title || req.body.description || req.body.project || req.body.assignedTo || req.body.deadline) {
         return res.status(403).json({ message: 'Members can only update task status' });
       }
+      
+      // Member cannot mark as 'Completed' directly. They must submit for 'In Review'.
+      if (req.body.status === 'Completed') {
+        req.body.status = 'In Review';
+      }
+      
       task.status = req.body.status || task.status;
     } else {
       // Admin can update any field
