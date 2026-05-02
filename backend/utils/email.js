@@ -5,12 +5,24 @@ dotenv.config();
 
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
-  port: 465,
-  secure: true,
+  port: 587,
+  secure: false, // Use TLS
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS ? process.env.EMAIL_PASS.replace(/\s/g, '') : '',
   },
+  tls: {
+    rejectUnauthorized: false // Helps with some cloud hosting certificate issues
+  }
+});
+
+// Verify connection configuration
+transporter.verify((error, success) => {
+  if (error) {
+    console.error('❌ Email Config Error:', error.message);
+  } else {
+    console.log('✅ Email server is ready to send messages');
+  }
 });
 
 export const sendWelcomeEmail = async (email, name, password) => {
