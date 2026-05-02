@@ -39,7 +39,7 @@ export const sendWelcomeEmail = async (email, name, password) => {
           <p>You have been added to the <strong>TeamTaskGo</strong> workspace by your Administrator.</p>
           <p>Below are your login credentials. Please keep them secure:</p>
           <div style="background: #f9f9f9; padding: 20px; border-radius: 12px; margin: 25px 0; border: 1px solid #e3f5ea;">
-            <p style="margin: 5px 0;"><strong>Login URL:</strong> <a href="http://localhost:5173" style="color: #3eb368; text-decoration: none; font-weight: bold;">http://localhost:5173</a></p>
+            <p style="margin: 5px 0;"><strong>Login URL:</strong> <a href="${process.env.FRONTEND_URL || 'http://localhost:5173'}" style="color: #3eb368; text-decoration: none; font-weight: bold;">${process.env.FRONTEND_URL || 'http://localhost:5173'}</a></p>
             <p style="margin: 5px 0;"><strong>Email:</strong> <span style="color: #555;">${email}</span></p>
             <p style="margin: 5px 0;"><strong>Password:</strong> <span style="color: #555;">${password}</span></p>
           </div>

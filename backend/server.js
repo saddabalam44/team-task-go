@@ -1,16 +1,18 @@
+import dotenv from 'dotenv';
+import dns from 'node:dns/promises';
+
+dotenv.config();
+dns.setServers(['8.8.8.8', '1.1.1.1']);
+
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import dotenv from 'dotenv';
 
 import authRoutes from './routes/auth.js';
 import projectRoutes from './routes/projects.js';
 import taskRoutes from './routes/tasks.js';
 import userRoutes from './routes/users.js';
-import noticeRoutes from './routes/notices.js';import dns from 'node:dns/promises';
-
-dns.setServers(['8.8.8.8', '1.1.1.1']);
-dotenv.config();
+import noticeRoutes from './routes/notices.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
