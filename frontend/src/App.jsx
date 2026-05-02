@@ -1,9 +1,9 @@
 import React from 'react';
-import { 
-  BrowserRouter as Router, 
-  Routes, 
-  Route, 
-  Navigate 
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate
 } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext.jsx';
 import Login from './pages/Login.jsx';
@@ -16,15 +16,15 @@ import Shell from './components/layout/Shell.jsx';
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
-  
+
   if (loading) return (
     <div className="h-screen w-screen flex items-center justify-center bg-beige-100">
       <div className="animate-pulse text-primary font-serif italic">Loading TeamTaskGo...</div>
     </div>
   );
-  
+
   if (!user) return <Navigate to="/login" />;
-  
+
   return <Shell>{children}</Shell>;
 }
 
@@ -35,31 +35,31 @@ export default function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          
+
           <Route path="/" element={
             <ProtectedRoute>
               <Dashboard />
             </ProtectedRoute>
           } />
-          
+
           <Route path="/projects" element={
             <ProtectedRoute>
               <Projects />
             </ProtectedRoute>
           } />
-          
+
           <Route path="/tasks" element={
             <ProtectedRoute>
               <Tasks />
             </ProtectedRoute>
           } />
-          
+
           <Route path="/members" element={
             <ProtectedRoute>
               <Members />
             </ProtectedRoute>
           } />
-          
+
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Router>

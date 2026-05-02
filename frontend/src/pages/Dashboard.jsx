@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import api from '../lib/api.js';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { motion } from 'motion/react';
-import { 
-  Briefcase, 
-  CheckSquare, 
-  Clock, 
+import {
+  Briefcase,
+  CheckSquare,
+  Clock,
   AlertCircle,
   TrendingUp,
   Sparkles,
@@ -32,7 +32,7 @@ export default function Dashboard() {
       try {
         const { data: tasks } = await api.get('/tasks');
         const now = new Date();
-        
+
         const total = tasks.length;
         const completed = tasks.filter((t) => t.status === 'Completed').length;
         const pending = tasks.filter((t) => t.status !== 'Completed').length;
@@ -138,7 +138,7 @@ export default function Dashboard() {
           <div className="space-y-4">
             {recentTasks.length > 0 ? (
               recentTasks.map((task, idx) => (
-                <motion.div 
+                <motion.div
                   key={task._id}
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -147,7 +147,7 @@ export default function Dashboard() {
                 >
                   <div className="flex items-center gap-4">
                     <div className={`w-3 h-3 rounded-full shadow-inner ${
-                      task.status === 'In Progress' ? 'bg-amber-400' : 
+                      task.status === 'In Progress' ? 'bg-amber-400' :
                       task.status === 'In Review' ? 'bg-blue-400' :
                       task.status === 'Needs Revision' ? 'bg-red-400' :
                       'bg-gray-300'
@@ -159,7 +159,7 @@ export default function Dashboard() {
                   </div>
                   <div className="text-right">
                     <span className={`inline-block px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-wider ${
-                      task.status === 'In Progress' ? 'bg-amber-100 text-amber-700' : 
+                      task.status === 'In Progress' ? 'bg-amber-100 text-amber-700' :
                       task.status === 'In Review' ? 'bg-blue-100 text-blue-700' :
                       task.status === 'Needs Revision' ? 'bg-red-100 text-red-700' :
                       'bg-gray-100 text-gray-600'
@@ -183,7 +183,7 @@ export default function Dashboard() {
           <div className="space-y-4">
             {recentCompleted.length > 0 ? (
               recentCompleted.map((task, idx) => (
-                <motion.div 
+                <motion.div
                   key={task._id}
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -220,19 +220,19 @@ export default function Dashboard() {
                 Notice Board
               </h3>
               {user?.role === 'Admin' && !isEditingNotice && (
-                <button 
-                  onClick={() => setIsEditingNotice(true)} 
+                <button
+                  onClick={() => setIsEditingNotice(true)}
                   className="text-emerald-50 hover:text-white text-sm font-bold bg-black/10 hover:bg-black/20 px-4 py-2 rounded-xl transition-all shadow-sm"
                 >
                   Edit Notice
                 </button>
               )}
             </div>
-            
+
             {isEditingNotice ? (
               <div className="space-y-4 relative z-20">
                 <div className="relative">
-                  <textarea 
+                  <textarea
                     value={editNoticeText}
                     onChange={(e) => setEditNoticeText(e.target.value)}
                     className="w-full bg-emerald-900/20 border-2 border-emerald-400/30 rounded-2xl p-5 text-white placeholder-emerald-100/40 focus:outline-none focus:border-white focus:bg-emerald-900/40 resize-none font-medium transition-all shadow-inner custom-scrollbar"
@@ -241,20 +241,20 @@ export default function Dashboard() {
                   />
                 </div>
                 <div className="flex items-center gap-2">
-                  <button 
-                    onClick={handleUpdateNotice} 
+                  <button
+                    onClick={handleUpdateNotice}
                     className="flex-[1.5] bg-white text-[#3eb368] py-3 rounded-xl text-sm font-bold shadow-[0_4px_15px_rgba(0,0,0,0.1)] hover:-translate-y-0.5 transition-all active:scale-95"
                   >
                     Publish
                   </button>
-                  <button 
-                    onClick={handleClearNotice} 
+                  <button
+                    onClick={handleClearNotice}
                     className="flex-1 bg-red-500/20 text-red-50 py-3 rounded-xl text-sm font-bold hover:bg-red-500 hover:text-white transition-all active:scale-95"
                   >
                     Clear
                   </button>
-                  <button 
-                    onClick={() => {setIsEditingNotice(false); setEditNoticeText(notice);}} 
+                  <button
+                    onClick={() => {setIsEditingNotice(false); setEditNoticeText(notice);}}
                     className="flex-1 bg-transparent border-2 border-emerald-300/30 text-white py-2.5 rounded-xl text-sm font-bold hover:bg-white/10 transition-all active:scale-95"
                   >
                     Cancel

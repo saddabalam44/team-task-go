@@ -3,7 +3,6 @@ import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 import { sendWelcomeEmail } from '../utils/email.js';
 
-
 const router = express.Router();
 
 router.post('/signup', async (req, res) => {

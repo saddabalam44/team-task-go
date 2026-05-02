@@ -31,7 +31,7 @@ export default function Signup() {
 
   return (
     <div className="min-h-screen bg-[#c8ebd6] flex items-center justify-center p-4">
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}

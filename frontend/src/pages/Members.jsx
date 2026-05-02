@@ -62,8 +62,8 @@ export default function Members() {
     }
   };
 
-  const filteredMembers = members.filter(m => 
-    m.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+  const filteredMembers = members.filter(m =>
+    m.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     m.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -80,16 +80,16 @@ export default function Members() {
         <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
           <div className="relative w-full sm:w-72">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-            <input 
-              type="text" 
-              placeholder="Search members..." 
+            <input
+              type="text"
+              placeholder="Search members..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full pl-11 pr-4 py-3 rounded-2xl border-2 border-transparent bg-white shadow-sm focus:border-[#3eb368] focus:ring-4 focus:ring-[#3eb368]/10 transition-all font-medium text-gray-700 outline-none"
             />
           </div>
           {user?.role === 'Admin' && (
-            <button 
+            <button
               onClick={() => setIsModalOpen(true)}
               className="w-full sm:w-auto bg-[#3eb368] text-white px-6 py-3 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-[#2a7a47] transition-all shadow-[0_4px_15px_rgba(62,179,104,0.3)] active:scale-95"
             >
@@ -102,26 +102,26 @@ export default function Members() {
 
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             className="bg-white rounded-[2.5rem] w-full max-w-md p-8 shadow-2xl relative"
           >
-            <button 
+            <button
               onClick={() => setIsModalOpen(false)}
               className="absolute top-6 right-6 text-gray-400 hover:text-gray-600 p-2 rounded-xl hover:bg-gray-100 transition-all"
             >
               <X size={24} />
             </button>
-            
+
             <h2 className="text-3xl font-bold text-gray-800 mb-2">Add Member</h2>
             <p className="text-gray-500 mb-8">Create a new team member. We'll email them their credentials.</p>
-            
+
             <form onSubmit={handleAddMember} className="space-y-5">
               <div>
                 <label className="block text-sm font-bold text-gray-700 mb-2 ml-1">Full Name</label>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   required
                   value={newMember.name}
                   onChange={(e) => setNewMember({...newMember, name: e.target.value})}
@@ -131,8 +131,8 @@ export default function Members() {
               </div>
               <div>
                 <label className="block text-sm font-bold text-gray-700 mb-2 ml-1">Email Address</label>
-                <input 
-                  type="email" 
+                <input
+                  type="email"
                   required
                   value={newMember.email}
                   onChange={(e) => setNewMember({...newMember, email: e.target.value})}
@@ -142,8 +142,8 @@ export default function Members() {
               </div>
               <div>
                 <label className="block text-sm font-bold text-gray-700 mb-2 ml-1">Password</label>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   required
                   value={newMember.password}
                   onChange={(e) => setNewMember({...newMember, password: e.target.value})}
@@ -151,7 +151,7 @@ export default function Members() {
                   placeholder="Set a password"
                 />
               </div>
-              <button 
+              <button
                 type="submit"
                 disabled={isSubmitting}
                 className="w-full bg-[#3eb368] text-white py-4 rounded-2xl font-bold text-lg shadow-[0_4px_15px_rgba(62,179,104,0.3)] hover:bg-[#2a7a47] transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-4"
@@ -178,7 +178,7 @@ export default function Members() {
                   {member.name.charAt(0).toUpperCase()}
                 </div>
                 {user?.role === 'Admin' && member._id !== user._id && (
-                  <button 
+                  <button
                     onClick={() => handleDeleteMember(member._id, member.name)}
                     title={`Delete ${member.name}`}
                     className="text-red-400 bg-red-50 hover:text-white hover:bg-red-500 rounded-xl transition-all p-2.5 z-10 shadow-sm"
@@ -187,9 +187,9 @@ export default function Members() {
                   </button>
                 )}
               </div>
-              
+
               <h3 className="text-2xl font-bold text-gray-800 tracking-tight">{member.name}</h3>
-              
+
               <div className="mt-6 space-y-3 flex-1">
                 <div className="flex items-center gap-3 text-gray-500 font-medium">
                   <div className="p-2 bg-gray-50 rounded-lg"><Mail size={16} /></div>
@@ -208,7 +208,7 @@ export default function Members() {
                     </span>
                   )}
                 </div>
-                
+
                 {member.role !== 'Admin' && (
                   <div className="pt-4 mt-2 border-t border-gray-100">
                     {(() => {

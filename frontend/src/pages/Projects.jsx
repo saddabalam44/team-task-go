@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import api from '../lib/api.js';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  Plus, 
-  Briefcase, 
-  Users, 
-  Trash2, 
+import {
+  Plus,
+  Briefcase,
+  Users,
+  Trash2,
   X
 } from 'lucide-react';
 
@@ -45,7 +45,6 @@ export default function Projects() {
     }
   };
 
-
   const handleDeleteProject = async (id) => {
     if (window.confirm('Delete this project?')) {
       try {
@@ -67,9 +66,9 @@ export default function Projects() {
           <h1 className="text-4xl font-bold text-gray-800 tracking-tight">Projects</h1>
           <p className="text-gray-500 mt-2 text-lg font-medium">Manage and view all active team projects.</p>
         </div>
-        
+
         {user?.role === 'Admin' && (
-          <button 
+          <button
             onClick={() => setShowModal(true)}
             className="bg-[#3eb368] hover:bg-[#349e5b] text-white rounded-2xl px-6 py-3.5 flex items-center gap-2 font-bold transition-all shadow-[0_8px_20px_rgba(62,179,104,0.3)] active:scale-95"
           >
@@ -95,7 +94,7 @@ export default function Projects() {
                     <Briefcase size={28} strokeWidth={2.5} />
                   </div>
                   {user?.role === 'Admin' && (
-                    <button 
+                    <button
                       onClick={() => handleDeleteProject(project._id)}
                       className="text-gray-300 hover:text-red-500 hover:bg-red-50 rounded-xl transition-colors p-2.5"
                     >
@@ -107,7 +106,7 @@ export default function Projects() {
                 <p className="text-gray-500 mt-3 text-sm line-clamp-3 leading-relaxed font-medium">
                   {project.description || 'No description provided.'}
                 </p>
-                
+
                 <div className="mt-8 pt-6 border-t border-gray-100 flex items-center justify-between">
                   <div className="flex items-center gap-2 text-gray-500 bg-[#f4fbfa] px-3 py-1.5 rounded-xl">
                     <Users size={16} className="text-[#3eb368]" />
@@ -127,14 +126,14 @@ export default function Projects() {
       <AnimatePresence>
         {showModal && (
           <>
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="fixed inset-0 bg-gray-900/40 backdrop-blur-sm z-[100]"
               onClick={() => setShowModal(false)}
             />
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -147,7 +146,7 @@ export default function Projects() {
                     <X size={24} />
                   </button>
                 </div>
-                
+
                 <form onSubmit={handleCreateProject} className="space-y-6">
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2 ml-1">Project Title</label>
@@ -170,7 +169,7 @@ export default function Projects() {
                       onChange={(e) => setNewProject({...newProject, description: e.target.value})}
                     />
                   </div>
-                  
+
                   <div className="pt-4 flex gap-4">
                     <button
                       type="submit"

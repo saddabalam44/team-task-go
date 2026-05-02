@@ -3,9 +3,9 @@ import api from '../lib/api.js';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { motion, AnimatePresence } from 'motion/react';
 import { format } from 'date-fns';
-import { 
-  Plus, 
-  User as UserIcon, 
+import {
+  Plus,
+  User as UserIcon,
   Calendar,
   X,
   Trash2,
@@ -22,7 +22,7 @@ export default function Tasks() {
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [filter, setFilter] = useState('All');
-  
+
   const [newTask, setNewTask] = useState({
     title: '',
     description: '',
@@ -113,13 +113,13 @@ export default function Tasks() {
           <h1 className="text-4xl font-bold text-gray-800 tracking-tight">Tasks</h1>
           <p className="text-gray-500 mt-2 text-lg font-medium">Manage assignments and track daily progress.</p>
         </div>
-        
+
         <div className="flex items-center gap-3">
           <div className="relative group">
             <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-hover:text-[#3eb368] transition-colors">
               <Filter size={18} />
             </div>
-            <select 
+            <select
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
               className="pl-12 pr-10 py-3.5 bg-white rounded-2xl text-sm font-bold text-gray-700 focus:outline-none focus:ring-4 focus:ring-[#3eb368]/10 appearance-none cursor-pointer shadow-sm border-2 border-transparent hover:border-gray-100"
@@ -134,7 +134,7 @@ export default function Tasks() {
           </div>
 
           {user?.role === 'Admin' && (
-            <button 
+            <button
               onClick={() => setShowModal(true)}
               className="bg-[#3eb368] hover:bg-[#349e5b] text-white rounded-2xl px-6 py-3.5 flex items-center gap-2 font-bold transition-all shadow-[0_8px_20px_rgba(62,179,104,0.3)] active:scale-95"
             >
@@ -156,11 +156,11 @@ export default function Tasks() {
               className="bg-white rounded-3xl border border-transparent p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-6 shadow-[0_4px_15px_rgba(0,0,0,0.02)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)] transition-all group"
             >
               <div className="flex items-start gap-5 flex-1">
-                <button 
+                <button
                   onClick={() => updateTaskStatus(task._id, task.status === 'Completed' ? 'In Progress' : 'Completed')}
                   disabled={user?.role !== 'Admin' && task.assignedTo?._id !== user?._id}
                   className={`mt-1.5 w-8 h-8 rounded-xl border-2 flex items-center justify-center transition-all flex-shrink-0 ${
-                    task.status === 'Completed' ? 'bg-[#3eb368] border-[#3eb368] text-white' : 
+                    task.status === 'Completed' ? 'bg-[#3eb368] border-[#3eb368] text-white' :
                     task.status === 'In Review' ? 'bg-blue-500 border-blue-500 text-white' :
                     task.status === 'Needs Revision' ? 'bg-red-100 border-red-300 text-red-500' :
                     'border-gray-200 hover:border-[#3eb368] text-transparent hover:text-[#3eb368]/30 bg-gray-50'
@@ -192,7 +192,7 @@ export default function Tasks() {
               </div>
 
               <div className="flex items-center gap-4 ml-13 sm:ml-0">
-                <select 
+                <select
                   value={task.status}
                   onChange={(e) => updateTaskStatus(task._id, e.target.value)}
                   disabled={user?.role !== 'Admin' && task.assignedTo?._id !== user?._id}
@@ -221,7 +221,7 @@ export default function Tasks() {
                 </select>
 
                 {user?.role === 'Admin' && (
-                  <button 
+                  <button
                     onClick={() => handleDeleteTask(task._id)}
                     className="text-gray-300 hover:text-red-500 hover:bg-red-50 transition-colors p-2.5 rounded-xl"
                   >
@@ -241,14 +241,14 @@ export default function Tasks() {
       <AnimatePresence>
         {showModal && (
           <>
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="fixed inset-0 bg-gray-900/40 backdrop-blur-sm z-[100]"
               onClick={() => setShowModal(false)}
             />
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -261,7 +261,7 @@ export default function Tasks() {
                     <X size={24} />
                   </button>
                 </div>
-                
+
                 <form onSubmit={handleCreateTask} className="space-y-5">
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2 ml-1">Task Name</label>
@@ -274,7 +274,7 @@ export default function Tasks() {
                       onChange={(e) => setNewTask({...newTask, title: e.target.value})}
                     />
                   </div>
-                  
+
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-semibold text-gray-700 mb-2 ml-1">Project</label>
@@ -316,7 +316,7 @@ export default function Tasks() {
                       onChange={(e) => setNewTask({...newTask, deadline: e.target.value})}
                     />
                   </div>
-                  
+
                   <div className="pt-4 flex gap-4">
                     <button
                       type="submit"

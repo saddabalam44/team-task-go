@@ -5,10 +5,10 @@ const taskSchema = new mongoose.Schema({
   description: { type: String },
   project: { type: mongoose.Schema.Types.ObjectId, ref: 'Project', required: true },
   assignedTo: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  status: { 
-    type: String, 
-    enum: ['Pending', 'In Progress', 'In Review', 'Completed', 'Needs Revision'], 
-    default: 'Pending' 
+  status: {
+    type: String,
+    enum: ['Pending', 'In Progress', 'In Review', 'Completed', 'Needs Revision'],
+    default: 'Pending'
   },
   deadline: { type: Date },
 }, { timestamps: true });
