@@ -8,8 +8,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, '.', '');
+  const envDir = path.resolve(__dirname, '..');
+  const env = loadEnv(mode, envDir, '');
   return {
+    envDir,
     plugins: [react(), tailwindcss()],
     server: {
       hmr: process.env.DISABLE_HMR !== 'true',

@@ -1,6 +1,4 @@
-Here’s a refined, premium-style version of your **TeamTaskGo** documentation, following the same tone, structure, and clarity as your Ethara AI approach:
 
----
 
 # **TeamTaskGo — Intelligent Team Task Manager (MERN Stack)**
 

@@ -1,14 +1,16 @@
 import mongoose from 'mongoose';
-import dns from 'node:dns/promises';
-dns.setServers(['8.8.8.8', '1.1.1.1']);
-
 import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import User from './models/User.js';
 import Project from './models/Project.js';
 import Task from './models/Task.js';
 
-dotenv.config();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+dotenv.config({ path: [path.resolve(__dirname, '../.env'), path.resolve(__dirname, '.env')] });
 
 mongoose.connect(process.env.MONGODB_URI)
   .then(async () => {
@@ -22,12 +24,12 @@ mongoose.connect(process.env.MONGODB_URI)
     const admin = new User({
       name: 'System Admin',
       email: 'admin@gmail.com',
-      password: 'Admin@123',
+      password: 'admin@12345',
       role: 'Admin'
     });
 
     await admin.save();
-    console.log('Default admin created: admin@gmail.com / Admin@123');
+    console.log('Default admin created: admin@gmail.com / admin@12345');
     process.exit(0);
   })
   .catch(err => {
