@@ -61,13 +61,18 @@ if (fs.existsSync(distPath)) {
   });
 }
 
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => {
-    console.log('Connected to MongoDB successfully!');
-    app.listen(PORT, () => {
-      console.log(`Server is running on http://localhost:${PORT}`);
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+
+if (!process.env.MONGODB_URI) {
+  console.error('❌ CRITICAL: MONGODB_URI environment variable is missing!');
+} else {
+  mongoose.connect(process.env.MONGODB_URI)
+    .then(() => {
+      console.log('✅ Connected to MongoDB successfully!');
+    })
+    .catch((err) => {
+      console.error('❌ Failed to connect to MongoDB:', err.message);
     });
-  })
-  .catch((err) => {
-    console.error('Failed to connect to MongoDB:', err);
-  });
+}

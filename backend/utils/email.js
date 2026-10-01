@@ -8,26 +8,34 @@ const __dirname = path.dirname(__filename);
 
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
+const emailUser = process.env.EMAIL_USER;
+const emailPass = process.env.EMAIL_PASS ? process.env.EMAIL_PASS.replace(/\s/g, '') : '';
+
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
   port: 587,
   secure: false,
+  family: 4, // Force IPv4 to fix ENETUNREACH errors on cloud platforms like Render
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS ? process.env.EMAIL_PASS.replace(/\s/g, '') : '',
+    user: emailUser,
+    pass: emailPass,
   },
   tls: {
     rejectUnauthorized: false
   }
 });
 
-transporter.verify((error, success) => {
-  if (error) {
-    console.error('❌ Email Config Error:', error.message);
-  } else {
-    console.log('✅ Email server is ready to send messages');
-  }
-});
+if (emailUser && emailPass && emailPass !== 'your_gmail_app_password' && emailPass !== 'your_gmail_app_password_here') {
+  transporter.verify((error, success) => {
+    if (error) {
+      console.warn('⚠️ Email Verification Warning:', error.message);
+    } else {
+      console.log('✅ Nodemailer is ready to send messages');
+    }
+  });
+} else {
+  console.log('ℹ️ Email credentials not configured; skipping SMTP verification on startup.');
+}
 
 export const sendWelcomeEmail = async (email, name, password) => {
   const emailUser = process.env.EMAIL_USER;
